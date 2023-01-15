@@ -2,12 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intern_assignment/bloc/vidoe/video_bloc.dart';
 import 'package:intern_assignment/screens/authentication/login_screen.dart';
 import 'package:intern_assignment/screens/home/home.dart';
-
 import 'bloc/authentication/authentication_bloc.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:intern_assignment/bloc/authentication/authentication_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,8 +18,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => AuthenticationBloc(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => AuthenticationBloc()),
+        BlocProvider(create: ((context) => VideoBloc()))
+      ],
       child: StreamBuilder(
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: ((context, streamsnapshot) {
