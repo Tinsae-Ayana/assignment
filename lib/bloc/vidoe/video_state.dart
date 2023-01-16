@@ -5,18 +5,16 @@ enum VideoStatus { inprogress, uploaded, beforeupload }
 class VideoState extends Equatable {
   final File? vidoeFile;
   final Uint8List? vidoeFileThumnail;
-  final List<Vidoe> videoFeed;
-  final List<File> vidoeFeedThumnai;
   final String description;
   final String title;
   final String location;
   final List<String> searchKeys;
   final String catagory;
   final VideoStatus isVideoUploading;
+  final List<Vidoe> videoFeed;
 
   const VideoState(
       {required this.title,
-      required this.vidoeFeedThumnai,
       required this.vidoeFileThumnail,
       required this.videoFeed,
       required this.vidoeFile,
@@ -34,7 +32,6 @@ class VideoState extends Equatable {
         catagory,
         searchKeys,
         isVideoUploading,
-        vidoeFeedThumnai,
         videoFeed,
         vidoeFileThumnail
       ];
@@ -46,14 +43,12 @@ class VideoState extends Equatable {
       location,
       catagory,
       isVideoUploading,
-      vidoeFeedThumnai,
       videoFeed,
       vidoeFileThumnail,
       clearThumnail,
       searchKeys}) {
     return VideoState(
         videoFeed: videoFeed ?? this.videoFeed,
-        vidoeFeedThumnai: vidoeFeedThumnai ?? this.vidoeFeedThumnai,
         vidoeFileThumnail: (vidoeFileThumnail == null && clearThumnail == true)
             ? null
             : clearThumnail == false

@@ -22,7 +22,6 @@ class _PostScreenState extends State<PostScreen> {
     final vidoe = await picker.pickVideo(source: ImageSource.camera);
     BlocProvider.of<VideoBloc>(context, listen: false)
         .add(FileEvent(vidoeFile: File(vidoe!.path)));
-    debugPrint(vidoe.toString());
   }
 
   @override

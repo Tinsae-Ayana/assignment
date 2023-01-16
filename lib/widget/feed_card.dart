@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intern_assignment/bloc/vidoe/video_bloc.dart';
@@ -48,15 +47,6 @@ class FeedCard extends StatelessWidget {
                 }),
           ),
           _descriptionView(context),
-          // const Text(
-          //   'the post time goes here',
-          //   // post.publishedDate.difference(DateTime.now()).inDays >= 30
-          //   //     ? post.publishedDate.toString().substring(1, 10)
-          //   //     : DateTime.now().difference(post.publishedDate).inHours >= 24
-          //   //         ? "${DateTime.now().difference(post.publishedDate).inDays.toString()} days ago"
-          //   //         : "${DateTime.now().difference(post.publishedDate).inHours} hours ago",
-          //   style: TextStyle(fontSize: 15, color: Colors.white),
-          // ),
           const Divider(
             color: Colors.white24,
           )

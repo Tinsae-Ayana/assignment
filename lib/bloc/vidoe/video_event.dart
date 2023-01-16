@@ -52,9 +52,10 @@ class FeedVideoEvent extends VideoEvent {
   const FeedVideoEvent({required this.videoFeed});
 }
 
-class FeedVideoThumnail extends VideoEvent {
-  final List<File> vidoeFeedThunai;
-  const FeedVideoThumnail({required this.vidoeFeedThunai});
-}
-
 class VidoeUploadEvent extends VideoEvent {}
+
+
+// class FeedVideoThumnail extends VideoEvent {
+// //   final List<File> vidoeFeedThunai;
+// //   const FeedVideoThumnail({required this.vidoeFeedThunai});
+// // }

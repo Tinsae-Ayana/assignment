@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 
 part 'authentication_event.dart';
 part 'authentication_state.dart';
@@ -26,7 +25,6 @@ class AuthenticationBloc
     on<LogoutEvent>(_onLogoutEvent);
   }
   _phoneNumberEvent(PhoneNumberEvent event, emit) {
-    debugPrint(event.phoneNumber);
     emit(state.copyWith(phoneNumber: event.phoneNumber));
   }
 
@@ -36,7 +34,6 @@ class AuthenticationBloc
   }
 
   _onOtpEvent(OtpEvent event, emit) {
-    debugPrint(event.otp);
     emit(state.copyWith(otp: event.otp));
   }
 
@@ -50,9 +47,8 @@ class AuthenticationBloc
 
   _onNextButtonEvent(NextButtonEvent event, emit) {
     add(StatusEvent(status: AuthStatus.inProgress));
-    debugPrint(inputValidationPhoneNumber().toString());
+
     if (inputValidationPhoneNumber()) {
-      debugPrint('inside the if statment');
       FirebaseAuth.instance.verifyPhoneNumber(
           phoneNumber: state.phoneNumber,
           verificationCompleted: (phoneCredential) {
@@ -77,8 +73,6 @@ class AuthenticationBloc
     add(StatusEvent(status: AuthStatus.inProgress));
 
     if (inputValidationOtp()) {
-      debugPrint(state.verificationId);
-      debugPrint('inside the if statment');
       final credential = PhoneAuthProvider.credential(
           verificationId: state.verificationId!, smsCode: state.otp);
       final userCredential =

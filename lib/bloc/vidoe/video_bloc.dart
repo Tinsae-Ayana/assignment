@@ -8,7 +8,6 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:geocode/geocode.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 import 'package:intern_assignment/models/vidoe.dart';
 
@@ -20,7 +19,6 @@ class VideoBloc extends Bloc<VideoEvent, VideoState> {
   VideoBloc()
       : super(const VideoState(
             videoFeed: [],
-            vidoeFeedThumnai: [],
             vidoeFileThumnail: null,
             searchKeys: [],
             title: '',
@@ -39,7 +37,7 @@ class VideoBloc extends Bloc<VideoEvent, VideoState> {
     on<SearchKeyEvent>(_onSearchKeyEvent);
     on<VidoeFileThumnail>(_onVidoeFileThumnail);
     on<FeedVideoEvent>(_onFeedVidoeEvent);
-    on<FeedVideoThumnail>(_onFeedVideoThumnail);
+    // on<FeedVideoThumnail>(_onFeedVideoThumnail);
     initiateFeedVideo();
   }
 
@@ -47,7 +45,6 @@ class VideoBloc extends Bloc<VideoEvent, VideoState> {
     emit(state.copyWith(vidoeFile: event.vidoeFile));
     final thumnail = await getThumnaillofVidoe(event.vidoeFile);
     add(VidoeFileThumnail(vidoeFileThumnail: thumnail));
-    debugPrint(state.vidoeFileThumnail.toString());
   }
 
   _onVidoeFileThumnail(VidoeFileThumnail event, emit) async {
@@ -88,16 +85,13 @@ class VideoBloc extends Bloc<VideoEvent, VideoState> {
     // });
   }
 
-  _onFeedVideoThumnail(FeedVideoThumnail event, emit) {
-    emit(state.copyWith(vidoeFeedThumnai: event.vidoeFeedThunai));
-  }
+  // _onFeedVideoThumnail(FeedVideoThumnail event, emit) {
+  //   emit(state.copyWith(vidoeFeedThumnai: event.vidoeFeedThunai));
+  // }
 
   _onSearchKeyEvent(SearchKeyEvent event, emit) {
     List<String> searchKeys = List.from(state.searchKeys)..add(event.searchKey);
-    debugPrint(searchKeys.toString());
-
     emit(state.copyWith(searchKeys: searchKeys));
-    debugPrint(state.searchKeys.toString());
   }
 
   //upload vidoe with all it's content
@@ -108,7 +102,7 @@ class VideoBloc extends Bloc<VideoEvent, VideoState> {
         state.title.isNotEmpty) {
       add(const UploadingEvent(isVidoeUploading: VideoStatus.inprogress));
       await getCurrentPosition();
-      debugPrint(state.location);
+
       final ref = FirebaseStorage.instance
           .ref()
           .child(FirebaseAuth.instance.currentUser!.uid)
@@ -187,7 +181,6 @@ class VideoBloc extends Bloc<VideoEvent, VideoState> {
   Future<Uint8List> getThumnailFromUrl(String url) async {
     final fileName = await VideoThumbnail.thumbnailData(
       video: url,
-      // thumbnailPath: (await getTemporaryDirectory()).path,
       imageFormat: ImageFormat.WEBP,
       maxHeight: 64,
       quality: 75,
